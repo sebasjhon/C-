@@ -1,0 +1,294 @@
+ #include <iostream>
+#include <iomanip>
+#include <algorithm>
+#include <string>
+#include <limits>
+using namespace std;
+
+// Parte del sistema de inventario, del Ejercicio 4. //
+const int ProductoMx = 100;
+
+string nombres[ProductoMx];
+int cantidades[ProductoMx];
+float precios[ProductoMx];
+int totalProductos = 0;
+
+void agregarProducto() {
+    if (totalProductos >= ProductoMx) {
+        cout << " No se pueden agregar más productos.\n";
+        return;
+    }
+
+    cout << "Ingrese el nombre del producto: ";
+    cin.ignore(); 
+    getline(cin, nombres[totalProductos]);
+
+    cout << "Ingrese la cantidad: ";
+    cin >> cantidades[totalProductos];
+
+    cout << "Ingrese el precio: ";
+    cin >> precios[totalProductos];
+
+    totalProductos++;
+    cout << "Producto agregado exitosamente.\n";
+}
+
+void mostrarInventario() {
+    if (totalProductos == 0) {
+        cout << "El inventario está vacío.\n";
+        return;
+    }
+
+    cout << "\n--- Inventario ---\n";
+    for (int i = 0; i < totalProductos; i++) {
+        cout << i + 1 << ". " << nombres[i]
+             << " | Cantidad: " << cantidades[i]
+             << " | Precio: $" << precios[i] << "\n";
+    }
+}
+
+void buscarProducto() {
+    string nombreBuscado;
+    cout << "Ingrese el nombre del producto a buscar: ";
+    cin.ignore(); // limpiar buffer
+    getline(cin, nombreBuscado);
+
+    bool encontrado = false;
+    for (int i = 0; i < totalProductos; i++) {
+        if (nombres[i] == nombreBuscado) {
+            cout << "Producto encontrado:\n";
+            cout << nombres[i]
+                 << " | Cantidad: " << cantidades[i]
+                 << " | Precio: $" << precios[i] << "\n";
+            encontrado = true;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        cout << "Producto no encontrado.\n";
+    }
+}
+
+int main() {
+    cout << "Ejercico #1:\n";
+    int numero[5] = {1, 2, 3, 4, 5};
+
+    for (int i = 0; i < 5; i++) {
+        cout << numero[i] << " ";
+    }
+    cout << "\n\n";
+    int mediana = numero[5 / 2];
+    cout << "La mediana del array es: " << mediana << "\n";
+
+    cout << "Ejercico #2:\n";
+    int Buscar;
+    cout << "   Ingresa un número para buscar en el array: ";
+    cin >> Buscar;
+
+    int iniciar = 0;
+    int final = 4;
+    int medio;
+    bool elementoEncontrado = false;
+    int posicion = -1;
+
+    while (iniciar <= final) {
+        medio = (iniciar + final) / 2;
+        if (numero[medio] == Buscar) {
+            elementoEncontrado = true;
+            posicion = medio;
+            break;
+        } else if (Buscar < numero[medio]) {
+            final = medio - 1;
+        } else {
+            iniciar = medio + 1;
+        }
+    }
+
+    if (elementoEncontrado) {
+        cout << "   El elemento " << Buscar << " se encontró en la posición " << posicion << "\n";
+    } else {
+        cout << "   El elemento " << Buscar << " no se encontró en el array\n";
+    }
+
+    cout << "\n\n";
+    cout << "Ejercico #3:\n";
+
+    int matriz[3][4] = {
+        {1, 2, 3, 4},
+        {5, 6, 7, 8},
+        {9, 10, 11, 12}
+    };
+
+    cout << "Matriz 3x4:\n";
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 4; j++) {
+            cout << matriz[i][j] << "   ";
+        }
+        cout << "\n";
+    }
+
+    cout << "Trapuesta de la Matriz:\n";
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 3; j++) {
+            cout << matriz[j][i] << "   ";
+        }
+        cout << "\n";
+    }
+
+    cout << "\n\n";
+    cout << "Ejercico #4:\n";
+    int opcion;
+
+    do {
+        cout << "\n--- SISTEMA DE INVENTARIO ---\n";
+        cout << "1. Agregar producto\n";
+        cout << "2. Mostrar inventario\n";
+        cout << "3. Buscar producto\n";
+        cout << "4. Salir\n";
+        cout << "Seleccione una opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1: agregarProducto(); break;
+            case 2: mostrarInventario(); break;
+            case 3: buscarProducto(); break;
+            case 4: cout << "Saliendo del sistema de inventario...\n"; break;
+            default: cout << "Opción inválida.\n";
+        }
+    } while (opcion != 4);
+    cout << "\n\n";
+    
+    cout << "Ejercico #5:\n";
+   int numeros[7] = {5,3,4,2,7,1,6};
+
+    for (int i = 0; i < 7 - 1; i++) {
+        int m = i; 
+        for (int j = i + 1; j < 7; j++) {
+            if (numeros[j] < numeros[m]) {
+                m = j;
+            }
+        }
+        if (m != i) {
+            int temp = numeros[i];
+            numeros[i] = numeros[m];
+            numeros[m] = temp;
+        }
+    }
+
+    cout << "Forma Ascendente:\n";
+    for (int i = 0; i < 7; i++) {
+        cout << numeros[i] << "  ";
+    }
+    cout << "\n\n";
+
+
+    cout << "Ejercico #6:\n";
+    
+    int arr[] = {4,7,4,0,6,7,2,3,5,1};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    cout << "Elementos duplicados:\n";
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (arr[i] == arr[j]) {
+                cout << arr[i] << " ";
+                break; 
+            }
+        }
+    }
+    cout << "\n\n";
+
+
+    cout << "Ejercico #7:\n";
+    const int N = 3;
+    char tablero[N][N];
+
+    for (int i = 0; i < N; ++i)
+        for (int j = 0; j < N; ++j)
+            tablero[i][j] = ' ';
+
+    char jugador = 'X';
+    bool terminado = false;
+    int fila, col;
+
+    cout << "=== 3 EN RAYA ===\n";
+
+    while (!terminado) {
+        cout << "\nTablero:\n";
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < N; ++j) {
+                cout << ' ' << (tablero[i][j] == ' ' ? '.' : tablero[i][j]);
+                if (j < N - 1) cout << " |";
+            }
+            cout << '\n';
+            if (i < N - 1) cout << "---+---+---\n";
+        }
+        cout << '\n';
+
+        while (true) {
+            cout << "Turno del jugador " << jugador << ". Ingresa fila y columna (0-2) separados por espacio: ";
+            if (!(cin >> fila >> col)) {
+                cout << "Entrada inválida. Ingresa DOS números (0, 1 o 2).\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
+            }
+            if (fila < 0 || fila >= N || col < 0 || col >= N) {
+                cout << "Fuera de rango. Deben ser valores entre 0 y 2.\n";
+                continue;
+            }
+            if (tablero[fila][col] != ' ') {
+                cout << "Casilla ocupada. Elige otra.\n";
+                continue;
+            }
+            break; 
+        }
+
+        tablero[fila][col] = jugador;
+
+        cout << "\nJugada realizada:\n";
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < N; ++j) {
+                cout << ' ' << (tablero[i][j] == ' ' ? '.' : tablero[i][j]);
+                if (j < N - 1) cout << " |";
+            }
+            cout << '\n';
+            if (i < N - 1) cout << "---+---+---\n";
+        }
+        cout << '\n';
+
+        bool gana = false;
+        for (int i = 0; i < N; ++i) {
+            if (tablero[i][0] == jugador && tablero[i][1] == jugador && tablero[i][2] == jugador) gana = true;
+            if (tablero[0][i] == jugador && tablero[1][i] == jugador && tablero[2][i] == jugador) gana = true;
+        }
+        if (tablero[0][0] == jugador && tablero[1][1] == jugador && tablero[2][2] == jugador) gana = true;
+        if (tablero[0][2] == jugador && tablero[1][1] == jugador && tablero[2][0] == jugador) gana = true;
+
+        if (gana) {
+            cout << "¡El jugador " << jugador << " ha ganado!\n";
+            terminado = true;
+            break;
+        }
+
+        bool lleno = true;
+        for (int i = 0; i < N; ++i)
+            for (int j = 0; j < N; ++j)
+                if (tablero[i][j] == ' ')
+                    lleno = false;
+
+        if (lleno) {
+            cout << "¡Empate!\n";
+            terminado = true;
+            break;
+        }
+
+        jugador = (jugador == 'X') ? 'O' : 'X';
+    } 
+
+    cout << "Fin del juego.\n";
+    
+    
+    
+  }
