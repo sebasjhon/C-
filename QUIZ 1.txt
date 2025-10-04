@@ -1,0 +1,104 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    cout <<"Ejercicio 1.1:\n" ;
+    int numeroEntero = 17;
+    float numeroFlotante = 3.1416;
+    char caracter = 'O';
+    
+    cout <<"ejercicio 2.1" ;
+    int n1;
+    int n2;
+    
+  
+    cout<<"Ingrese el primer numero: ";
+    cin>>n1;
+    cout<<"Ingrese el segundo numero: ";
+    cin>>n2;
+    
+
+    int suma=n1+n2;
+    int resta=n1-n2;
+    int mult=n1*n2;
+    int divi=n1/n2;
+    
+    cout<<"\n La Suma es: "<<suma<<endl;
+    cout<<"\n La resta es: "<<resta<<endl;
+    cout<<"\n La multiplicacion es: "<<mult<<endl;
+    cout<<"\n La division es: "<<divi<<endl;
+    
+    cout << "Ejercicio 2.1\n" ;
+    int a = 5;
+    int b = 10;
+
+    if (a == b) {
+        cout << "a es igual a b" << endl;
+    } else {
+        cout << "a no es igual a b" << endl;  
+    }
+
+
+    if (a != b) {
+        cout << "a es diferente de b" << endl; 
+    } else {
+        cout << "a no es diferente de b" << endl;
+    }
+    
+    cout <<"Ejercicio:" ;
+     bool condicion1 = true;
+    bool condicion2 = false;
+    
+    cout << "   condicion1 = " << condicion1 << ", condicion2 = " << condicion2 << "\n";
+    cout << "   AND (&&): " << condicion1 << " && " << condicion2 << " = " << (condicion1 && condicion2) << "\n";
+    cout << "   OR (||): " << condicion1 << " || " << condicion2 << " = " << (condicion1 || condicion2) << "\n";
+    cout << "   NOT (!): !" << condicion1 << " = " << (!condicion1) << "\n";
+    cout<<"\n";
+    
+    //Ejercicio 3.1 
+    
+    int edad;
+
+    cout<<"Ingrese la edad: ";
+    cin>>edad;
+
+    if(edad>=18){
+        cout<<"Eres mayor de edad" <<endl;
+    }else{
+        cout<<"Eres menor de edad"<< endl;
+    }
+    cout<<"\n";
+    
+    
+    //Ejercicio 3.2 
+    // se utiliza para comparar datos, por ejemplo que si el dato x es igual al dato y, o que SI el dato A es igual al dato B. If se traduce como SI.
+    
+    // Ejercicio 4
+    for (int i =1; i <=10;i++){
+        cout<<i<< endl;
+    }
+    cout<<"\n"; 
+    
+    
+    //Ejercicio 4.2
+     int i = 10;
+
+    while(i >=1){
+        cout<< i<<endl;
+        i--; 
+    }
+    cout<<"\n";
+
+    //Ejercicio 4.3 
+    int t = 2; 
+
+    do{
+        cout<< t <<endl;
+        t +=2; 
+    }while (t<= 20);
+    
+    cout<<"\n";
+    
+    
+}
