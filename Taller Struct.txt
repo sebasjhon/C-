@@ -1,0 +1,198 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <cctype>
+
+using namespace std;
+
+
+// ======= PUNTO 1 =======
+struct Producto {
+    std::string nombre;
+    double precio = 0.0;
+    int stock = 0;
+
+    Producto(std::string n, double p = 0.0, int s = 0)
+        : nombre(n), precio(p), stock(s) {}
+};
+
+int main() {
+    std::cout << "PUNTO 1:" << std::endl;
+    Producto p1("Pan");
+    Producto p2("Leche", 1.2);
+    Producto p3("Huevos", 2.5, 10);
+
+    std::cout << p1.nombre << " - " << p1.precio << " - " << p1.stock << std::endl;
+    std::cout << p2.nombre << " - " << p2.precio << " - " << p2.stock << std::endl;
+    std::cout << p3.nombre << " - " << p3.precio << " - " << p3.stock << std::endl;
+
+    // ======= PUNTO 2 =======
+    std::cout << "\nPUNTO 2:" << std::endl;
+    struct Producto2 {
+        std::string nombre;
+        double precio = 0.0;
+        int stock = 0;
+
+        Producto2(std::string n, double p = 0.0, int s = 0)
+            : nombre(n), precio(p), stock(s) {}
+
+        bool disponible() const { return stock > 0; }
+        bool esValido() const { return precio >= 0 && !nombre.empty(); }
+    };
+
+    std::vector<Producto2> inventario = {
+        {"Pan", 1.0, 5}, {"", 2.0, 3}, {"Leche", -1.0, 4}, {"Queso", 3.5, 0}
+    };
+
+    inventario.erase(std::remove_if(inventario.begin(), inventario.end(),
+        [](const Producto2 &p) { return !p.esValido() || !p.disponible(); }), inventario.end());
+
+    for (auto &p : inventario)
+        std::cout << p.nombre << " - " << p.precio << " - " << p.stock << std::endl;
+
+    // ======= PUNTO 3 =======
+    std::cout << "\n PUNTO 3:" << std::endl;
+    struct Producto3 {
+        std::string nombre;
+        double precio = 0.0;
+        int stock = 0;
+
+        Producto3(std::string n, double p = 0.0, int s = 0)
+            : nombre(n), precio(p), stock(s) {}
+
+        static std::string minusculas(const std::string &s) {
+            std::string r = s;
+            std::transform(r.begin(), r.end(), r.begin(), ::tolower);
+            return r;
+        }
+
+        bool operator==(const Producto3 &o) const {
+            return minusculas(nombre) == minusculas(o.nombre);
+        }
+
+        bool operator<(const Producto3 &o) const {
+            if (precio == o.precio)
+                return nombre < o.nombre;
+            return precio < o.precio;
+        }
+    };
+
+    std::vector<Producto3> lista = {
+        {"Pan", 1.5, 5}, {"Leche", 1.0, 2}, {"Huevos", 2.0, 6}, {"queso", 1.0, 4}
+    };
+
+    std::sort(lista.begin(), lista.end());
+    for (auto &p : lista)
+        std::cout << p.nombre << " - " << p.precio << std::endl;
+
+    Producto3 buscado("QUESO");
+    auto it = std::find(lista.begin(), lista.end(), buscado);
+    if (it != lista.end())
+        std::cout << "Encontrado: " << it->nombre << std::endl;
+    else
+        std::cout << "No encontrado" << std::endl;
+
+    // ======= PUNTO 4 =======
+    std::cout << "\n PUNTO 4:" << std::endl;
+    struct Polinomio {
+        std::vector<double> coef;
+        Polinomio(std::initializer_list<double> c) : coef(c) {}
+        void mostrar() const {
+            for (int i = coef.size() - 1; i >= 0; --i) {
+                std::cout << coef[i] << "x^" << i;
+                if (i > 0) std::cout << " + ";
+            }
+            std::cout << std::endl;
+        }
+    };
+
+    Polinomio p({1, -2, 3});
+    p.mostrar();
+
+    // ======= PUNTO 5 =======
+    std::cout << "\n PUNTO 5:" << std::endl;
+    struct Inventario {
+        std::vector<Producto3> productos;
+
+        void agregar(const Producto3 &p) { productos.push_back(p); }
+
+        void mostrar() const {
+            for (auto &p : productos)
+                std::cout << p.nombre << " - $" << p.precio << " - stock: " << p.stock << std::endl;
+        }
+
+        Producto3* buscar(const std::string &nombre) {
+            for (auto &p : productos)
+                if (Producto3::minusculas(p.nombre) == Producto3::minusculas(nombre))
+                    return &p;
+            return nullptr;
+        }
+    };
+
+    Inventario inv;
+    inv.agregar({"Pan", 1.0, 10});
+    inv.agregar({"Leche", 1.2, 5});
+    inv.mostrar();
+
+    if (auto *res = inv.buscar("leche"))
+        std::cout << "Producto encontrado: " << res->nombre << std::endl;
+
+    // ======= PUNTO 6 =======
+    std::cout << "\n PUNTO 6:" << std::endl;
+    struct Fraccion {
+        int num, den;
+        Fraccion(int n, int d) : num(n), den(d ? d : 1) {}
+        void simplificar() {
+            int a = num, b = den;
+            while (b != 0) {
+                int t = b;
+                b = a % b;
+                a = t;
+            }
+            num /= a; den /= a;
+        }
+        void mostrar() const {
+            std::cout << num << "/" << den << std::endl;
+        }
+    };
+
+    Fraccion f(8, 12);
+    f.simplificar();
+    f.mostrar();
+
+    // ======= PUNTO 7 =======
+    std::cout << "\n PUNTO 7:" << std::endl;
+    struct Contacto {
+        std::string nombre;
+        std::string telefono;
+    };
+
+    struct Agenda {
+        std::vector<Contacto> contactos;
+
+        void agregar(const Contacto &c) { contactos.push_back(c); }
+
+        void mostrar() const {
+            for (auto &c : contactos)
+                std::cout << c.nombre << ": " << c.telefono << std::endl;
+        }
+
+        Contacto* buscar(const std::string &nombre) {
+            for (auto &c : contactos)
+                if (c.nombre == nombre) return &c;
+            return nullptr;
+        }
+    };
+
+    Agenda ag;
+    ag.agregar({"Ana", "12345"});
+    ag.agregar({"Luis", "67890"});
+    ag.mostrar();
+
+    if (auto *c = ag.buscar("Luis"))
+        std::cout << "Contacto encontrado: " << c->nombre << " - " << c->telefono << std::endl;
+
+     
+}
